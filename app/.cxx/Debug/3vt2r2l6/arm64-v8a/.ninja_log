@@ -1,0 +1,5 @@
+# ninja log v5
+0	1048	1671948880	CMakeFiles/fhe-lib.dir/libheaan.cpp.o	eae2863afa2ab2af
+1049	1327	1671948880	/Users/pardess/AndroidProjects/PoseEncryption/app/build/intermediates/cxx/Debug/3vt2r2l6/obj/arm64-v8a/libfhe-lib.so	ef47d3ede3fef77f
+2	1167	1671949970	CMakeFiles/fhe-lib.dir/libheaan.cpp.o	eae2863afa2ab2af
+1167	1458	1671949970	/Users/pardess/AndroidProjects/PoseEncryption/app/build/intermediates/cxx/Debug/3vt2r2l6/obj/arm64-v8a/libfhe-lib.so	ef47d3ede3fef77f

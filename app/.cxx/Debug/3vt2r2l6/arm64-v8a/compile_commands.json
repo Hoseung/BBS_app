@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/pardess/AndroidProjects/PoseEncryption/app/.cxx/Debug/3vt2r2l6/arm64-v8a",
+  "command": "/Users/pardess/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android28 --gcc-toolchain=/Users/pardess/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/pardess/Library/Android/sdk/ndk/21.4.7075529/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dfhe_lib_EXPORTS -I/Users/pardess/AndroidProjects/PoseEncryption/app/src/main/cpp/lib/gmp/include/shared -I/Users/pardess/AndroidProjects/PoseEncryption/app/src/main/cpp/lib/ntl/include -I/Users/pardess/AndroidProjects/PoseEncryption/app/src/main/cpp/lib/heaan/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O0 -fno-limit-debug-info  -fPIC -o CMakeFiles/fhe-lib.dir/libheaan.cpp.o -c /Users/pardess/AndroidProjects/PoseEncryption/app/src/main/cpp/libheaan.cpp",
+  "file": "/Users/pardess/AndroidProjects/PoseEncryption/app/src/main/cpp/libheaan.cpp"
+}
+]

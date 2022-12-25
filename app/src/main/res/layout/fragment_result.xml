@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp">
+
+    <TextView
+        android:id="@+id/resultUserTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="사용자 ID: 123"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/resultListTv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_f0f4fd_layout"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:text="1 앉기:  4\n
+2 서기:  3\n
+3 … :  2\n
+4 … :  0\n
+5:  0\n
+6:  1\n
+7:  1\n
+8:  3\n
+9:  4\n
+10:  4\n
+11:  4\n
+12:  3\n
+13:  4\n
+14 제자리 돌기:  0 "
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/resultTv"
+        app:layout_constraintTop_toBottomOf="@id/resultUserTv" />
+
+    <TextView
+        android:id="@+id/resultTv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_f0f4fd_layout"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
+        android:text="123 님은 낙상 확률이\n{total}%로 낮습니다."
+        android:textColor="#333399"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/resultBtn" />
+
+    <TextView
+        android:id="@+id/resultBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_blue_layout"
+        android:gravity="center"
+        android:text="결과 확인"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
