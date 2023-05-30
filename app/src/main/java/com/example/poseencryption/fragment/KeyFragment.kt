@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.poseencryption.Constants
 import com.example.poseencryption.MainActivity
+import com.example.poseencryption.api.SharedViewModel
 import com.example.poseencryption.api.UrlManager
 import com.example.poseencryption.databinding.FragmentKeyBinding
 import kotlinx.coroutines.CoroutineScope
@@ -18,14 +19,14 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-
+import androidx.fragment.app.activityViewModels
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
 class KeyFragment : Fragment() {
-
+    private val viewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentKeyBinding
 
     private var encFile: File? = null
@@ -39,7 +40,7 @@ class KeyFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentKeyBinding.inflate(layoutInflater)
 
@@ -49,9 +50,12 @@ class KeyFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
+        viewModel.serverIp.value = edittextIp.text.toString()
+        viewModel.serverPort.value = edittextIp.text.toString()
+
         createKeyLy.setOnClickListener {
             createKeyPB.visibility = View.VISIBLE
-            checkKeyTv.text = ""
+            checkKeyTv.text = "Connecting to ${viewModel.serverIp.value.toString()} : ${viewModel.serverPort.value.toString()} \n"
             CoroutineScope(Dispatchers.Main).launch {
                 createKeyPB.visibility = View.VISIBLE
                 delay(100L)
@@ -132,10 +136,6 @@ class KeyFragment : Fragment() {
                     }
                 })
         }
-    }
-
-    fun dg() {
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

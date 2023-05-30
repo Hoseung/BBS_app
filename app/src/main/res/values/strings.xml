@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">PoseEncryption</string>
+    <string name="send_key"> 키 전송</string>
+    <string name="generate_key"> 키 생성</string>
+    <string name="desc_server_ip">Input Server IP</string>
+    <string name="server_ip">서버 접속 IP</string>
+    <string name="desc_server_port">Input Server port</string>
+    <string name="server_port">서버 포트</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

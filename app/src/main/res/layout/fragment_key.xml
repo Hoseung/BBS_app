@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,32 +9,40 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="서버 정보 입력1"
+        android:text="@string/server_ip"
         android:textColor="#999999"
         android:textSize="16sp" />
 
     <EditText
+        android:id="@+id/edittext_ip"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="51dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_f8f8f8_layout" />
+        android:autofillHints="192.168.0.1"
+        android:background="@drawable/bg_f8f8f8_layout"
+        android:hint="@string/desc_server_ip"
+        android:inputType="textUri" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="서버 정보 입력2"
+        android:text="@string/server_port"
         android:textColor="#999999"
         android:textSize="16sp" />
 
     <EditText
+        android:id="@+id/edittext_port"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_f8f8f8_layout" />
+        android:autofillHints="8888"
+        android:background="@drawable/bg_f8f8f8_layout"
+        android:hint="@string/desc_server_port"
+        android:inputType="number" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="204dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -47,17 +56,15 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/key_white_icon" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="키 생성"
-                android:textColor="@color/white" />
+                android:autoSizeMinTextSize="12dp"
+                android:text="@string/generate_key"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:drawableStartCompat="@drawable/selector_key" />
 
         </LinearLayout>
 
@@ -80,7 +87,7 @@
         android:background="@drawable/bg_f0f4fd_layout" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="204dp"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -94,17 +101,14 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/key_white_icon" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="키 전송"
-                android:textColor="@color/white" />
+                android:text="@string/send_key"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/selector_key" />
 
         </LinearLayout>
 

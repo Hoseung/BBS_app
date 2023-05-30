@@ -1,6 +1,14 @@
 package com.example.poseencryption.api
 
-class UrlManager {
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+
+class SharedViewModel : ViewModel() {
+    val serverIp = MutableLiveData<String>()
+    val serverPort = MutableLiveData<String>()
+}
+class UrlManager : Fragment() {
 
     companion object {
 
