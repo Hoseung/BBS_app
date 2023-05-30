@@ -1,6 +1,8 @@
 package com.example.poseencryption.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,13 +30,7 @@ import java.io.File
 class KeyFragment : Fragment() {
     private val viewModel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentKeyBinding
-
-    private var encFile: File? = null
-    private var mulFile: File? = null
-    private var conjFile: File? = null
-    private var rotFile: File? = null
-
-    private val path: String = Constants.dataDir
+    private val path: String = Constants.dataDir!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,8 +46,21 @@ class KeyFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-        viewModel.serverIp.value = edittextIp.text.toString()
-        viewModel.serverPort.value = edittextIp.text.toString()
+
+        edittextIp.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                viewModel.serverIp.value = s.toString()
+            }
+        })
+        edittextPort.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                viewModel.serverPort.value = s.toString()
+            }
+        })
 
         createKeyLy.setOnClickListener {
             createKeyPB.visibility = View.VISIBLE
@@ -59,20 +68,20 @@ class KeyFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 createKeyPB.visibility = View.VISIBLE
                 delay(100L)
-                encFile = File(path, "EncKey.txt")
-                if (encFile!!.exists()) {
+//                val encFile =
+                if (File(path, "EncKey.txt").exists()) {
                     checkKeyTv.append("Encrypt Key is Generated\n")
                 }
-                mulFile = File(path, "MulKey.txt")
-                if (mulFile!!.exists()) {
+//                mulFile = File(path, "MulKey.txt")
+                if (File(path, "MulKey.txt").exists()) {
                     checkKeyTv.append("Multiple Key is Generated\n")
                 }
-                conjFile = File(path, "ConjKey.txt")
-                if (conjFile!!.exists()) {
+//                conjFile = File(path, "ConjKey.txt")
+                if (File(path, "ConjKey.txt").exists()) {
                     checkKeyTv.append("Conjunction Key is Generated\n")
                 }
-                rotFile = File(path, "RotKey_1.txt")
-                if (rotFile!!.exists()) {
+//                rotFile = File(path, "RotKey_1.txt")
+                if (File(path, "RotKey_1.txt").exists()) {
                     checkKeyTv.append("Rotation Key is Generated\n")
                 }
                 if (MainActivity().createNewKeys(path)?.isNotEmpty() == true) {
@@ -82,59 +91,33 @@ class KeyFragment : Fragment() {
         }
         uploadKeyLy.setOnClickListener {
             uploadKeyPB.visibility = View.VISIBLE
-            encFile = File(path, "EncKey.txt")
-            if (!encFile!!.exists()) {
+            val encFile = File(path, "EncKey.txt")
+            if (!encFile.exists()) {
                 Toast.makeText(requireContext(), "파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            UrlManager.instance.postKeyFile("enc_key", "EncKey.txt", encFile)
 
-            mulFile = File(path, "MulKey.txt")
-            if (!mulFile!!.exists()) {
+            val mulFile = File(path, "MulKey.txt")
+            if (!mulFile.exists()) {
                 Toast.makeText(requireContext(), "파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            UrlManager.instance.postKeyFile("mul_key", "MulKey.txt", mulFile)
 
-            val requestFile = RequestBody.create(MediaType.parse("text/*"), encFile)
-            val encBody = MultipartBody.Part.createFormData("file", "EncKey.txt", requestFile)
-            UrlManager.service?.postKeyFile("enc_key", encBody)?.enqueue(object :
-                Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
-                            println(response.code())
-                        }
-                    } else {
-                        println(response)
-                    }
-                    println(response.body().toString())
-                }
+            val rotFile = File(path, "RotKey.txt")
+            if (!mulFile.exists()) {
+                Toast.makeText(requireContext(), "파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            UrlManager.instance.postKeyFile("rot_key", "RotKey.txt", rotFile)
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
-
-            val mulRequestFile = RequestBody.create(MediaType.parse("text/plain"), mulFile)
-            val body = MultipartBody.Part.createFormData("file", "MulKey.txt", mulRequestFile)
-            UrlManager.service?.postKeyFile("mul_key", body)
-                ?.enqueue(object : Callback<ResponseBody?> {
-                    override fun onResponse(
-                        call: Call<ResponseBody?>,
-                        response: Response<ResponseBody?>
-                    ) {
-                        println(response.body())
-                        println(response.code())
-                        Toast.makeText(requireContext(), "키 전송 성공!", Toast.LENGTH_SHORT).show()
-                        uploadKeyPB.visibility = View.GONE
-                    }
-
-                    override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                        t.printStackTrace()
-                    }
-                })
+            val conjFile = File(path, "ConjKey.txt")
+            if (!conjFile.exists()) {
+                Toast.makeText(requireContext(), "파일이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            UrlManager.instance.postKeyFile("conj_key", "ConjKey.txt", conjFile)
         }
     }
 

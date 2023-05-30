@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Size
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.poseencryption.Constants
 import com.example.poseencryption.MainActivity
@@ -23,9 +22,6 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.*
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -71,7 +67,7 @@ class CaptureFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Initialize asset manager so that MediaPipe native libraries can access the app assets, e.g.,
         // binary graphs.
         binding = FragmentCaptureBinding.inflate(layoutInflater)
@@ -126,27 +122,28 @@ class CaptureFragment : Fragment() {
 
     private fun initView() = with(binding) {
         downloadBtn.setOnClickListener {
-            UrlManager.service?.downloadEncryption()?.enqueue(object : Callback<ResponseBody> {
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
-                            writeResponseBodyToDisk(response.body()!!)
-                            Toast.makeText(requireContext(), "다운로드 성공!", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        println(response)
-                    }
-                    println(response.body().toString())
-                }
-
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    t.printStackTrace()
-                }
-
-            })
+            UrlManager.instance.downloadCtxt()
+//            UrlManager.service?.downloadEncryption()?.enqueue(object : Callback<ResponseBody> {
+//                override fun onResponse(
+//                    call: Call<ResponseBody>,
+//                    response: Response<ResponseBody>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        if (response.body() != null) {
+//                            writeResponseBodyToDisk(response.body()!!)
+//                            Toast.makeText(requireContext(), "다운로드 성공!", Toast.LENGTH_SHORT).show()
+//                        }
+//                    } else {
+//                        println(response)
+//                    }
+//                    println(response.body().toString())
+//                }
+//
+//                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                    t.printStackTrace()
+//                }
+//
+//            })
         }
 
         captureBtn.setOnClickListener {
@@ -210,21 +207,22 @@ class CaptureFragment : Fragment() {
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-        UrlManager.service?.postEncryptionFile("ctxt", 3, body)
-            ?.enqueue(object : Callback<ResponseBody?> {
-                override fun onResponse(
-                    call: Call<ResponseBody?>,
-                    response: Response<ResponseBody?>
-                ) {
-                    println(response.body())
-                    println(response.code())
-                    Toast.makeText(requireContext(), "성공적으로 전송되었습니다.", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
+        UrlManager.instance.postCtxt("ctxt", 3, body)
+//        UrlManager.service?.postEncryptionFile("ctxt", 3, body)
+//            ?.enqueue(object : Callback<ResponseBody?> {
+//                override fun onResponse(
+//                    call: Call<ResponseBody?>,
+//                    response: Response<ResponseBody?>
+//                ) {
+//                    println(response.body())
+//                    println(response.code())
+//                    Toast.makeText(requireContext(), "성공적으로 전송되었습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//
+//                override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+//                    t.printStackTrace()
+//                }
+//            })
 
     }
 
@@ -232,7 +230,7 @@ class CaptureFragment : Fragment() {
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
         return try {
             // todo change the file location/name according to your needs
-            val futureStudioIconFile: File =
+            val futureStudioIconFile =
                 File(
                     requireContext().getExternalFilesDir(null)
                         .toString() + File.separator + "Download Data @#$%^"
@@ -288,6 +286,7 @@ class CaptureFragment : Fragment() {
         previewDisplayView!!.visibility = View.GONE
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
@@ -295,7 +294,7 @@ class CaptureFragment : Fragment() {
         PermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    protected fun onCameraStarted(surfaceTexture: SurfaceTexture?) {
+    private fun onCameraStarted(surfaceTexture: SurfaceTexture?) {
         previewFrameTexture = surfaceTexture
 
         // Make the display view visible to start showing the preview. This triggers the

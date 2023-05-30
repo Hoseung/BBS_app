@@ -1,6 +1,5 @@
 package com.example.poseencryption
 
-import android.graphics.Paint.Cap
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -105,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     external fun Test(path: String?)
 
     private fun setPaths() {
-        Constants.setDataDir(applicationContext.filesDir.toString() + "/")
+        Constants.dataDir = applicationContext.filesDir.toString() + "/"
     }
 
 }
